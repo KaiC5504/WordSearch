@@ -1,6 +1,6 @@
 package ch.makery.wordsearch
 
-import ch.makery.wordsearch.view.GameController
+
 import scalafx.application.JFXApp
 import scalafx.application.JFXApp.PrimaryStage
 import scalafx.scene.Scene
@@ -8,7 +8,6 @@ import scalafx.Includes._
 import scalafxml.core.{FXMLLoader, NoDependencyResolver}
 import javafx.{scene => jfxs}
 import scalafx.scene.image.Image
-import scalafx.stage.{Modality, Stage}
 
 object MainApp extends JFXApp{
 
@@ -20,7 +19,7 @@ object MainApp extends JFXApp{
   stage = new PrimaryStage {
     title = "Word Search"
     icons += new Image(getClass.getResourceAsStream("/images/icon.png"))
-    scene = new Scene {
+    scene = new Scene() {
       root = roots
     }
     width = 900
@@ -47,7 +46,7 @@ object MainApp extends JFXApp{
     val resource = getClass.getResource("view/Game.fxml")
     val loader = new FXMLLoader(resource, NoDependencyResolver)
     loader.load();
-    val roots = loader.getRoot[jfxs.layout.GridPane]
+    val roots = loader.getRoot[jfxs.layout.AnchorPane]
     this.roots.setCenter(roots)
   }
   showHome()
