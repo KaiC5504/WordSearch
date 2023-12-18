@@ -6,6 +6,7 @@ import javafx.fxml.FXML
 import scalafx.Includes._
 import scalafx.scene.control.Label
 import scalafx.scene.layout.GridPane
+import scalafx.scene.paint.Color
 import scalafxml.core.macros.sfxml
 
 @sfxml
@@ -16,9 +17,9 @@ class GameController(
                       val word3: Label
                     ) {
 
-
-
   private val gameBoard: GameBoard = GameBoard.getGameBoard
+  private var gameManager: GameManager = _
+  private var currentSelection = Seq.empty[(String, Int, Int)]
 
 
   var isGameOver = false
@@ -32,16 +33,69 @@ class GameController(
     val (rows, columns) = boardSize(difficulty)
     setupGameBoard(rows, columns)
 
-    val wordGenerator = new GameManager(gameGrid, rows, columns, handleLetterClick)
-    wordGenerator.alphabetInserts(rows, columns)
+    gameManager = new GameManager(gameGrid, rows, columns, handAlphabetClick)
+    gameManager.alphabetInserts(rows, columns)
 
-    val selectWords = wordGenerator.selectWords()
+    val selectWords = gameManager.selectWords()
     updateLabels(selectWords)
   }
 
-  private def handleLetterClick(letter: String, row: Int, col: Int): Unit = {
-    // Logic for what happens when a letter is clicked
-    println(s"Clicked letter: $letter at position ($row, $col)")
+  private def handAlphabetClick(letter: String, row: Int, col: Int): Unit = {
+    val formedWord = currentSelection.map(_._1).mkString + letter
+    val startsNewWord = gameManager.getSelectedWords.exists(w => w.startsWith(formedWord) || w.startsWith(letter))
+
+    if (currentSelection.isEmpty || isAdjacent(currentSelection.last, (letter, row, col)) && startsNewWord) {
+      currentSelection :+= (letter, row, col)
+    } else {
+      resetSelection()
+      if (startsNewWord) {
+        currentSelection :+= (letter, row, col)
+      }
+    }
+
+    println(s"Current List: ${currentSelection.map(_._1).mkString}")
+    checkIfWordFormed()
+  }
+
+  private def isAdjacent(lastSelection: (String, Int, Int), newSelection: (String, Int, Int)): Boolean = {
+    val (_, lastRow, lastCol) = lastSelection
+    val (_, newRow, newCol) = newSelection
+
+    // Check for horizontal adjacency
+    val isHorizontalAdjacent = lastRow == newRow && (Math.abs(newCol - lastCol) == 1)
+
+    // Check for vertical adjacency
+    val isVerticalAdjacent = lastCol == newCol && (Math.abs(newRow - lastRow) == 1)
+
+    isHorizontalAdjacent || isVerticalAdjacent
+  }
+
+//  private def highlightWord(word: String): Unit = {
+//    currentSelection.foreach { case (letter, row, col) =>
+//      if (word.contains(letter)) {
+//        gameManager.highlightRectangleAt(row, col, Color.Green.opacity(0.5))
+//      }
+//    }
+//  }
+//
+//  private def resetHighlighting(): Unit = {
+//    gameManager.resetAllHighlighting()
+//  }
+
+  private def checkIfWordFormed(): Unit = {
+    val formedWord = currentSelection.map(_._1).mkString
+    if (gameManager.getSelectedWords.contains(formedWord)) {
+      println(s"Correct word: $formedWord")
+      // highlightWord(formedWord) // Uncomment to highlight the word
+      resetSelection()
+    } else if (currentSelection.nonEmpty && !gameManager.getSelectedWords.exists(word => word.startsWith(formedWord))) {
+      resetSelection()
+    }
+  }
+
+  private def resetSelection(): Unit = {
+    currentSelection = Seq.empty
+//    resetHighlighting() // Call this method to reset the UI highlighting
   }
 
   private def updateLabels(words: Seq[String]): Unit = {

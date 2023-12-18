@@ -16,12 +16,23 @@ class GameManager(val gameGrid: GridPane, val rows: Int, val columns: Int, click
   private var _selectedWords: Seq[String] = Seq.empty
   val wordsPool = Seq("HOT", "THIS", "WHY", "BIRD", "SAND", "LOVE", "MAY")
   val alphabetPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  val maxLengthOfWords: Int = wordsPool.map(_.length).max
+  private val rectangleMap: scala.collection.mutable.Map[(Int, Int), Rectangle] = scala.collection.mutable.Map.empty
 
   def selectWords(): Seq[String] = {
     if (_selectedWords.isEmpty) {
       _selectedWords = Random.shuffle(wordsPool).take(3)
     }
     _selectedWords
+  }
+  def getSelectedWords: Seq[String] = _selectedWords
+
+  def highlightRectangleAt(row: Int, col: Int, color: Color): Unit = {
+    rectangleMap.get((row, col)).foreach(_.fill = color)
+  }
+
+  def resetAllHighlighting(): Unit = {
+    rectangleMap.values.foreach(_.fill = Color.Transparent)
   }
 
   def canPlaceWord(word: String, startRow: Int, startColumn: Int, rows: Int, columns: Int): Boolean = {
@@ -76,6 +87,7 @@ class GameManager(val gameGrid: GridPane, val rows: Int, val columns: Int, click
           })
           gameGrid.add(rectangle, targetColumn, targetRow)
 
+          rectangleMap((targetRow, targetColumn)) = rectangle
         }
       } else {
         // Try placing the word again
