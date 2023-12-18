@@ -1,10 +1,8 @@
 package ch.makery.wordsearch.model
 
-import ch.makery.wordsearch.MainApp
-import ch.makery.wordsearch.model.GameBoard
+
 import scalafx.Includes._
 import scalafx.scene.layout.GridPane
-import scalafxml.core.macros.sfxml
 import scalafx.scene.paint.Color
 import scalafx.scene.text.Font
 import scala.util.Random
@@ -13,8 +11,16 @@ import scalafx.scene.shape.Rectangle
 
 class WordGenerator(val gameGrid: GridPane, val rows: Int, val columns: Int) {
 
-  val words = Seq("HOT", "THIS", "WHY")
+  private var _selectedWords: Seq[String] = Seq.empty
+  val wordsPool = Seq("HOT", "THIS", "WHY", "BIRD", "SAND", "LOVE", "MAY")
   val alphabetPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+  def selectWords(): Seq[String] = {
+    if (_selectedWords.isEmpty) {
+      _selectedWords = Random.shuffle(wordsPool).take(3)
+    }
+    _selectedWords
+  }
 
   def canPlaceWord(word: String, startRow: Int, startColumn: Int, rows: Int, columns: Int): Boolean = {
     val indices = (0 until word.length).map { k =>
@@ -73,10 +79,10 @@ class WordGenerator(val gameGrid: GridPane, val rows: Int, val columns: Int) {
   }
 
   def alphabetInserts(rows: Int, columns: Int): Unit = {
-    val words = Seq("HOT", "THIS", "WHY")
+    val randomSelectedWords = selectWords()
     val alphabetPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-    for (word <- words) {
+    for (word <- randomSelectedWords) {
       placeWord(word, rows, columns)
     }
 

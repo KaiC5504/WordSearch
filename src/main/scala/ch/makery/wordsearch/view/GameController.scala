@@ -2,19 +2,20 @@ package ch.makery.wordsearch.view
 
 import ch.makery.wordsearch.MainApp
 import ch.makery.wordsearch.model.{GameBoard, WordGenerator}
+import javafx.fxml.FXML
 import scalafx.Includes._
+import scalafx.scene.control.Label
 import scalafx.scene.layout.GridPane
 import scalafxml.core.macros.sfxml
-import scalafx.scene.paint.Color
-import scalafx.scene.text.Font
-import scala.util.Random
-import scalafx.scene.input.MouseEvent
-import scalafx.scene.shape.Rectangle
 
 @sfxml
 class GameController(
-                      val gameGrid: GridPane
+                      val gameGrid: GridPane,
+                      val word1: Label,
+                      val word2: Label,
+                      val word3: Label
                     ) {
+
 
 
   private val gameBoard: GameBoard = GameBoard.getGameBoard
@@ -33,6 +34,17 @@ class GameController(
 
     val wordGenerator = new WordGenerator(gameGrid, rows, columns)
     wordGenerator.alphabetInserts(rows, columns)
+
+    val selectWords = wordGenerator.selectWords()
+    updateLabels(selectWords)
+  }
+
+  private def updateLabels(words: Seq[String]): Unit = {
+    if (words.length >= 3) {
+      word1.setText(words(0))
+      word2.setText(words(1))
+      word3.setText(words(2))
+    }
   }
 
 
@@ -41,7 +53,7 @@ class GameController(
       case "easy" => (7, 7)
       case "medium" => (9, 9)
       case "hard" => (11, 11)
-      case _ => throw new IllegalArgumentException("Invalid difficulty")
+      case _ => throw new IllegalArgumentException("Invalid")
     }
   }
 
