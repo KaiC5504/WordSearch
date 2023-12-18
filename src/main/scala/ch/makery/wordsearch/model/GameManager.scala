@@ -1,15 +1,17 @@
 package ch.makery.wordsearch.model
 
 
+import ch.makery.wordsearch.MainApp
 import scalafx.Includes._
 import scalafx.scene.layout.GridPane
 import scalafx.scene.paint.Color
 import scalafx.scene.text.Font
+
 import scala.util.Random
 import scalafx.scene.input.MouseEvent
 import scalafx.scene.shape.Rectangle
 
-class WordGenerator(val gameGrid: GridPane, val rows: Int, val columns: Int) {
+class GameManager(val gameGrid: GridPane, val rows: Int, val columns: Int, clickHandler: (String, Int, Int) => Unit) {
 
   private var _selectedWords: Seq[String] = Seq.empty
   val wordsPool = Seq("HOT", "THIS", "WHY", "BIRD", "SAND", "LOVE", "MAY")
@@ -56,9 +58,13 @@ class WordGenerator(val gameGrid: GridPane, val rows: Int, val columns: Int) {
             width <== gameGrid.width / columns
             height <== gameGrid.height / rows
             fill = Color.Transparent
+            userData = (targetRow, targetColumn, letter)
           }
+
           rectangle.setOnMousePressed((event: MouseEvent) => {
             rectangle.fill = Color.Blue.opacity(0.1)
+            val (row, col, clickedLetter) = rectangle.userData.asInstanceOf[(Int, Int, String)]
+            clickHandler(clickedLetter, row, col)
           })
 
           rectangle.setOnMouseDragged((event: MouseEvent) => {
@@ -101,10 +107,13 @@ class WordGenerator(val gameGrid: GridPane, val rows: Int, val columns: Int) {
           width <== gameGrid.width / columns
           height <== gameGrid.height / rows
           fill = Color.Transparent
+          userData = (i, j, randomAlphabet)
         }
 
         rectangle.setOnMousePressed((event: MouseEvent) => {
           rectangle.fill = Color.Blue.opacity(0.1)
+          val (row, col, clickedLetter) = rectangle.userData.asInstanceOf[(Int, Int, String)]
+          clickHandler(clickedLetter, row, col)
         })
 
         rectangle.setOnMouseDragged((event: MouseEvent) => {

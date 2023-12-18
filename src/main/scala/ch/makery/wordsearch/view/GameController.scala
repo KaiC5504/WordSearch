@@ -1,7 +1,7 @@
 package ch.makery.wordsearch.view
 
 import ch.makery.wordsearch.MainApp
-import ch.makery.wordsearch.model.{GameBoard, WordGenerator}
+import ch.makery.wordsearch.model.{GameBoard, GameManager}
 import javafx.fxml.FXML
 import scalafx.Includes._
 import scalafx.scene.control.Label
@@ -32,11 +32,16 @@ class GameController(
     val (rows, columns) = boardSize(difficulty)
     setupGameBoard(rows, columns)
 
-    val wordGenerator = new WordGenerator(gameGrid, rows, columns)
+    val wordGenerator = new GameManager(gameGrid, rows, columns, handleLetterClick)
     wordGenerator.alphabetInserts(rows, columns)
 
     val selectWords = wordGenerator.selectWords()
     updateLabels(selectWords)
+  }
+
+  private def handleLetterClick(letter: String, row: Int, col: Int): Unit = {
+    // Logic for what happens when a letter is clicked
+    println(s"Clicked letter: $letter at position ($row, $col)")
   }
 
   private def updateLabels(words: Seq[String]): Unit = {
