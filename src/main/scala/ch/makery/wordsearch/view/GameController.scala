@@ -4,7 +4,7 @@ import ch.makery.wordsearch.MainApp
 import ch.makery.wordsearch.model.{GameBoard, GameManager}
 import javafx.fxml.FXML
 import scalafx.Includes._
-import scalafx.scene.control.Label
+import scalafx.scene.control.{Button, Label}
 import scalafx.scene.layout.GridPane
 import scalafx.scene.paint.Color
 import scalafx.scene.shape.Line
@@ -16,19 +16,19 @@ class GameController(
                       val word1: Label,
                       val word2: Label,
                       val word3: Label,
+                      val gameOver: Label,
                       val line1: Line,
                       val line2: Line,
                       val line3: Line,
+                      val backToHome: Button,
+                      val newGame: Button,
                     ) {
 
   private val gameBoard: GameBoard = GameBoard.getGameBoard
   private var gameManager: GameManager = _
   private var currentSelection = Seq.empty[(String, Int, Int)]
-
-
-  var isGameOver = false
-  var isUserMove = true
   var difficulty = gameBoard.getSelectedDifficulty
+  private var wordsFound: Int = 0
 
   initialize()
 
@@ -42,6 +42,9 @@ class GameController(
 
     val selectWords = gameManager.selectWords()
     updateLabels(selectWords)
+
+    backToHome.setOnAction(_ => handleBackToHome())
+    newGame.setOnAction(_ => handleNewGame())
   }
 
   private def handAlphabetClick(letter: String, row: Int, col: Int): Unit = {
@@ -93,14 +96,6 @@ class GameController(
 //    resetHighlighting() // Call this method to reset the UI highlighting
   }
 
-  private def updateLabels(words: Seq[String]): Unit = {
-    if (words.length >= 3) {
-      word1.setText(words(0))
-      word2.setText(words(1))
-      word3.setText(words(2))
-    }
-  }
-
   private def crossOutWordLabel(correctWord: String): Unit = {
     val wordLineMap = Map(
       word1.getText -> line1,
@@ -108,8 +103,44 @@ class GameController(
       word3.getText -> line3
     )
     wordLineMap.get(correctWord).foreach(_.setVisible(true))
+    wordsFound += 1
+    checkGameOver()
   }
 
+  private def checkGameOver(): Unit = {
+    if (wordsFound == 3) {
+      gameOver.setVisible(true)
+      List(word1, word2, word3).foreach(_.setVisible(false))
+      List(line1, line2, line3).foreach(_.setVisible(false))
+
+      backToHome.setVisible(true)
+      newGame.setVisible(true)
+    }
+  }
+
+  private def handleBackToHome(): Unit = {
+    // Code to navigate back to the home screen
+    MainApp.showHome() // Assuming MainApp has a method showHome
+  }
+
+  def handleNewGame(): Unit = {
+    val newSelectWords = gameManager.resetGame()
+    updateLabels(newSelectWords)
+    gameOver.setVisible(false)
+    List(word1, word2, word3).foreach(_.setVisible(true))
+    List(line1, line2, line3).foreach(_.setVisible(false))
+    backToHome.setVisible(false)
+    newGame.setVisible(false)
+    wordsFound = 0
+  }
+
+  private def updateLabels(words: Seq[String]): Unit = {
+    if (words.length >= 3) {
+      word1.setText(words(0))
+      word2.setText(words(1))
+      word3.setText(words(2))
+    }
+  }
 
   def boardSize(difficulty: String): (Int, Int) = {
     difficulty.toLowerCase match {

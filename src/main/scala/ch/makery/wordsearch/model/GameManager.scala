@@ -143,6 +143,19 @@ class GameManager(val gameGrid: GridPane, val rows: Int, val columns: Int, click
     }
   }
 
+  def resetGame(): Seq[String] = {
+    _selectedWords = Seq.empty
+
+    gameGrid.children.clear()
+
+    rectangleMap.clear()
+    labelMap.clear()
+
+    alphabetInserts(rows, columns)
+
+    selectWords() // This will generate and return new selected words
+  }
+
   def changeLabelStyle(row: Int, col: Int, color: Color): Unit = {
     labelMap.get((row, col)).foreach { label =>
       label.setTextFill(color)
