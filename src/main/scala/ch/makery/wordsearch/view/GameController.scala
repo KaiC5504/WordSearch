@@ -70,23 +70,13 @@ class GameController(
     isHorizontalAdjacent || isVerticalAdjacent
   }
 
-//  private def highlightWord(word: String): Unit = {
-//    currentSelection.foreach { case (letter, row, col) =>
-//      if (word.contains(letter)) {
-//        gameManager.highlightRectangleAt(row, col, Color.Green.opacity(0.5))
-//      }
-//    }
-//  }
-//
-//  private def resetHighlighting(): Unit = {
-//    gameManager.resetAllHighlighting()
-//  }
-
   private def checkIfWordFormed(): Unit = {
     val formedWord = currentSelection.map(_._1).mkString
     if (gameManager.getSelectedWords.contains(formedWord)) {
       println(s"Correct word: $formedWord")
-      // highlightWord(formedWord) // Uncomment to highlight the word
+      currentSelection.foreach { case (_, row, col) =>
+        gameManager.changeLabelColor(row, col, Color.Green)
+      }
       resetSelection()
     } else if (currentSelection.nonEmpty && !gameManager.getSelectedWords.exists(word => word.startsWith(formedWord))) {
       resetSelection()

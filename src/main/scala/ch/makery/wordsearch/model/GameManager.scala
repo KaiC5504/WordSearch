@@ -18,6 +18,7 @@ class GameManager(val gameGrid: GridPane, val rows: Int, val columns: Int, click
   val alphabetPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
   val maxLengthOfWords: Int = wordsPool.map(_.length).max
   private val rectangleMap: scala.collection.mutable.Map[(Int, Int), Rectangle] = scala.collection.mutable.Map.empty
+  private val labelMap: scala.collection.mutable.Map[(Int, Int), javafx.scene.control.Label] = scala.collection.mutable.Map.empty
 
   def selectWords(): Seq[String] = {
     if (_selectedWords.isEmpty) {
@@ -62,6 +63,7 @@ class GameManager(val gameGrid: GridPane, val rows: Int, val columns: Int, click
           val targetRow = startRow
           val targetColumn = (startColumn + k) % columns // Place each letter in a consecutive column
           gameGrid.add(label, targetColumn, targetRow)
+          labelMap((targetRow, targetColumn)) = label
           label.setFont(new Font(30))
           javafx.scene.layout.GridPane.setHalignment(label, javafx.geometry.HPos.CENTER)
 
@@ -139,6 +141,10 @@ class GameManager(val gameGrid: GridPane, val rows: Int, val columns: Int, click
 
       }
     }
+  }
+
+  def changeLabelColor(row: Int, col: Int, color: Color): Unit = {
+    labelMap.get((row, col)).foreach(_.setTextFill(color))
   }
 
 }
