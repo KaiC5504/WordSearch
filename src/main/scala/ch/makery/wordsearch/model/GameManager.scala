@@ -5,7 +5,7 @@ import ch.makery.wordsearch.MainApp
 import scalafx.Includes._
 import scalafx.scene.layout.GridPane
 import scalafx.scene.paint.Color
-import scalafx.scene.text.Font
+import scalafx.scene.text.{Font, FontWeight}
 
 import scala.util.Random
 import scalafx.scene.input.MouseEvent
@@ -143,8 +143,11 @@ class GameManager(val gameGrid: GridPane, val rows: Int, val columns: Int, click
     }
   }
 
-  def changeLabelColor(row: Int, col: Int, color: Color): Unit = {
-    labelMap.get((row, col)).foreach(_.setTextFill(color))
+  def changeLabelStyle(row: Int, col: Int, color: Color): Unit = {
+    labelMap.get((row, col)).foreach { label =>
+      label.setTextFill(color)
+      label.setFont(Font.font("Arial", FontWeight.Bold, 30))
+    }
   }
 
 }

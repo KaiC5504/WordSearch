@@ -7,6 +7,7 @@ import scalafx.Includes._
 import scalafx.scene.control.Label
 import scalafx.scene.layout.GridPane
 import scalafx.scene.paint.Color
+import scalafx.scene.shape.Line
 import scalafxml.core.macros.sfxml
 
 @sfxml
@@ -14,7 +15,10 @@ class GameController(
                       val gameGrid: GridPane,
                       val word1: Label,
                       val word2: Label,
-                      val word3: Label
+                      val word3: Label,
+                      val line1: Line,
+                      val line2: Line,
+                      val line3: Line,
                     ) {
 
   private val gameBoard: GameBoard = GameBoard.getGameBoard
@@ -75,8 +79,9 @@ class GameController(
     if (gameManager.getSelectedWords.contains(formedWord)) {
       println(s"Correct word: $formedWord")
       currentSelection.foreach { case (_, row, col) =>
-        gameManager.changeLabelColor(row, col, Color.Green)
+        gameManager.changeLabelStyle(row, col, Color.Green)
       }
+      crossOutWordLabel(formedWord)
       resetSelection()
     } else if (currentSelection.nonEmpty && !gameManager.getSelectedWords.exists(word => word.startsWith(formedWord))) {
       resetSelection()
@@ -94,6 +99,15 @@ class GameController(
       word2.setText(words(1))
       word3.setText(words(2))
     }
+  }
+
+  private def crossOutWordLabel(correctWord: String): Unit = {
+    val wordLineMap = Map(
+      word1.getText -> line1,
+      word2.getText -> line2,
+      word3.getText -> line3
+    )
+    wordLineMap.get(correctWord).foreach(_.setVisible(true))
   }
 
 
