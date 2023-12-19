@@ -8,4 +8,12 @@ class HomeController {
   def handlePlay():Unit = {
     MainApp.showGameDifficulty()
   }
+
+  def handleTutorial(): Unit = {
+    MainApp.showTutorial()
+  }
+
+  def handleClose(): Unit = {
+    MainApp.closeApp()
+  }
 }

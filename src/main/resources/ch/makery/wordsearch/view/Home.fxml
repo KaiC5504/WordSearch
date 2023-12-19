@@ -23,17 +23,12 @@
          <font>
             <Font name="Arial" size="25.0" />
          </font></Button>
-      <Button layoutX="389.0" layoutY="260.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="124.0" text="Tutorial">
+      <Button layoutX="390.0" layoutY="317.0" mnemonicParsing="false" onAction="#handleTutorial" prefHeight="48.0" prefWidth="124.0" text="Tutorial">
          <font>
             <Font name="Arial" size="25.0" />
          </font>
       </Button>
-      <Button layoutX="375.0" layoutY="365.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="155.0" text="Load Save" AnchorPane.leftAnchor="375.0" AnchorPane.rightAnchor="370.0">
-         <font>
-            <Font name="Arial" size="25.0" />
-         </font>
-      </Button>
-      <Button layoutX="402.0" layoutY="473.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="101.0" text="Exit">
+      <Button layoutX="402.0" layoutY="473.0" mnemonicParsing="false" onAction="#handleClose" prefHeight="47.0" prefWidth="101.0" text="Exit">
          <font>
             <Font name="Arial" size="25.0" />
          </font>
