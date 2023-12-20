@@ -1,7 +1,7 @@
 package ch.makery.wordsearch.view
 
 import ch.makery.wordsearch.MainApp
-import ch.makery.wordsearch.model.{GameBoard, GameManager}
+import ch.makery.wordsearch.model.{FirstLetterHint, GameBoard, GameManager}
 import javafx.fxml.FXML
 import scalafx.Includes._
 import scalafx.scene.control.{Button, Label}
@@ -22,6 +22,7 @@ class GameController(
                       val line3: Line,
                       val backToHome: Button,
                       val newGame: Button,
+                      val hint: Button
                     ) {
 
   private val gameBoard: GameBoard = GameBoard.getGameBoard
@@ -30,6 +31,7 @@ class GameController(
   var difficulty = gameBoard.getSelectedDifficulty
   private var wordsFound: Int = 0
 
+
   initialize()
 
   def initialize(): Unit = {
@@ -37,7 +39,11 @@ class GameController(
     val (rows, columns) = boardSize(difficulty)
     setupGameBoard(rows, columns)
 
-    gameManager = new GameManager(gameGrid, rows, columns, handAlphabetClick)
+    gameManager = new GameManager(gameGrid, rows, columns, handAlphabetClick, null)
+
+    val showHint = new FirstLetterHint(gameManager)
+    gameManager.hintSystem = showHint
+
     gameManager.alphabetInserts(rows, columns)
 
     val selectWords = gameManager.selectWords()
@@ -45,6 +51,7 @@ class GameController(
 
     backToHome.setOnAction(_ => handleBackToHome())
     newGame.setOnAction(_ => handleNewGame())
+    hint.setOnAction(_ => handleHint())
   }
 
   private def handAlphabetClick(letter: String, row: Int, col: Int): Unit = {
@@ -84,6 +91,7 @@ class GameController(
       currentSelection.foreach { case (_, row, col) =>
         gameManager.changeLabelStyle(row, col, Color.Green)
       }
+      gameManager.markWordAsFound(formedWord)
       crossOutWordLabel(formedWord)
       resetSelection()
     } else if (currentSelection.nonEmpty && !gameManager.getSelectedWords.exists(word => word.startsWith(formedWord))) {
@@ -140,6 +148,10 @@ class GameController(
       word2.setText(words(1))
       word3.setText(words(2))
     }
+  }
+
+  def handleHint(): Unit = {
+    gameManager.hintSystem.showHint()
   }
 
   def boardSize(difficulty: String): (Int, Int) = {

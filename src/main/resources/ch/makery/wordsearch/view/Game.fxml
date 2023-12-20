@@ -8,41 +8,41 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="592.0" prefWidth="895.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.makery.wordsearch.view.GameController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="699.0" prefWidth="990.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.makery.wordsearch.view.GameController">
    <children>
-      <SplitPane dividerPositions="0.1632996632996633" layoutX="-3.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="592.0" prefWidth="895.0">
+      <SplitPane dividerPositions="0.1632996632996633" layoutX="-3.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="699.0" prefWidth="990.0">
          <items>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="92.0" prefWidth="893.0">
                <children>
-                  <Label fx:id="word1" alignment="CENTER" layoutX="28.0" layoutY="17.0" prefHeight="58.0" prefWidth="212.0" text="Label">
+                  <Label fx:id="word1" alignment="CENTER" layoutX="28.0" layoutY="26.0" prefHeight="58.0" prefWidth="212.0" text="Label">
                      <font>
                         <Font name="Arial" size="30.0" />
                      </font>
                   </Label>
-                  <Label fx:id="word2" alignment="CENTER" layoutX="341.0" layoutY="17.0" prefHeight="58.0" prefWidth="212.0" text="Label">
+                  <Label fx:id="word2" alignment="CENTER" layoutX="388.0" layoutY="26.0" prefHeight="58.0" prefWidth="212.0" text="Label">
                      <font>
                         <Font name="Arial" size="30.0" />
                      </font>
                   </Label>
-                  <Label fx:id="word3" alignment="CENTER" layoutX="655.0" layoutY="17.0" prefHeight="58.0" prefWidth="212.0" text="Label">
+                  <Label fx:id="word3" alignment="CENTER" layoutX="724.0" layoutY="26.0" prefHeight="58.0" prefWidth="212.0" text="Label">
                      <font>
                         <Font name="Arial" size="30.0" />
                      </font>
                   </Label>
-                  <Line fx:id="line1" endX="100.0" layoutX="134.0" layoutY="46.0" startX="-100.0" visible="false" />
-                  <Line fx:id="line2" endX="100.0" layoutX="447.0" layoutY="46.0" startX="-100.0" visible="false" />
-                  <Line fx:id="line3" endX="100.0" layoutX="761.0" layoutY="47.0" startX="-100.0" visible="false" />
-                  <Label fx:id="gameOver" alignment="CENTER" layoutX="347.0" layoutY="22.0" prefHeight="47.0" prefWidth="201.0" text="Game Over" visible="false">
+                  <Line fx:id="line1" endX="100.0" layoutX="139.0" layoutY="55.0" startX="-100.0" visible="false" />
+                  <Line fx:id="line2" endX="100.0" layoutX="494.0" layoutY="54.0" startX="-100.0" visible="false" />
+                  <Line fx:id="line3" endX="100.0" layoutX="830.0" layoutY="53.0" startX="-100.0" visible="false" />
+                  <Label fx:id="gameOver" alignment="CENTER" layoutX="394.0" layoutY="29.0" prefHeight="47.0" prefWidth="201.0" text="Game Over" visible="false">
                      <font>
                         <Font name="Arial Bold" size="30.0" />
                      </font>
                   </Label>
-                  <Button fx:id="backToHome" layoutX="66.0" layoutY="24.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="137.0" text="Back to Home" visible="false">
+                  <Button fx:id="backToHome" layoutX="71.0" layoutY="31.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="137.0" text="Back to Home" visible="false">
                      <font>
                         <Font name="Arial" size="17.0" />
                      </font>
                   </Button>
-                  <Button fx:id="newGame" layoutX="693.0" layoutY="24.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="137.0" text="New Game" visible="false">
+                  <Button fx:id="newGame" layoutX="762.0" layoutY="32.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="137.0" text="New Game" visible="false">
                      <font>
                         <Font name="Arial" size="17.0" />
                      </font>
@@ -51,7 +51,8 @@
             </AnchorPane>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <GridPane fx:id="gameGrid" layoutX="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="890.0" />
+                  <GridPane fx:id="gameGrid" layoutX="2.0" layoutY="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="988.0" />
+                  <Button fx:id="hint" layoutX="885.0" layoutY="527.0" mnemonicParsing="false" onAction="#handleHint" prefHeight="38.0" prefWidth="89.0" text="Hint" />
                </children>
             </AnchorPane>
          </items>

@@ -23,8 +23,8 @@ object MainApp extends JFXApp{
     scene = new Scene() {
       root = roots
     }
-    width = 900
-    height = 680
+    width = 1000
+    height = 780
   }
 
   def showHome(): Unit = {

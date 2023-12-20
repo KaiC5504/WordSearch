@@ -11,18 +11,21 @@ import scala.util.Random
 import scalafx.scene.input.MouseEvent
 import scalafx.scene.shape.Rectangle
 
-class GameManager(val gameGrid: GridPane, val rows: Int, val columns: Int, clickHandler: (String, Int, Int) => Unit) {
+class GameManager(val gameGrid: GridPane, val rows: Int, val columns: Int, clickHandler: (String, Int, Int) => Unit, var hintSystem: HintSystem) {
 
   private var _selectedWords: Seq[String] = Seq.empty
+  private var foundWords: Set[String] = Set.empty
   val wordsPool = Seq("HOT", "THIS", "WHY", "BIRD", "SAND", "LOVE", "MAY")
   val alphabetPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
   val maxLengthOfWords: Int = wordsPool.map(_.length).max
   private val rectangleMap: scala.collection.mutable.Map[(Int, Int), Rectangle] = scala.collection.mutable.Map.empty
   private val labelMap: scala.collection.mutable.Map[(Int, Int), javafx.scene.control.Label] = scala.collection.mutable.Map.empty
+  var wordStartPositions: Map[String, (Int, Int, Boolean)] = Map()
 
   def selectWords(): Seq[String] = {
     if (_selectedWords.isEmpty) {
       _selectedWords = Random.shuffle(wordsPool).take(3)
+      println(s"Selected words for the game: ${_selectedWords.mkString(", ")}")
     }
     _selectedWords
   }
@@ -66,6 +69,7 @@ class GameManager(val gameGrid: GridPane, val rows: Int, val columns: Int, click
           labelMap((targetRow, targetColumn)) = label
           label.setFont(new Font(30))
           javafx.scene.layout.GridPane.setHalignment(label, javafx.geometry.HPos.CENTER)
+          wordStartPositions += (word -> (startRow, startColumn, true))
 
           val rectangle = new Rectangle {
             width <== gameGrid.width / columns
@@ -143,7 +147,34 @@ class GameManager(val gameGrid: GridPane, val rows: Int, val columns: Int, click
     }
   }
 
+  def changeLabelStyle(row: Int, col: Int, color: Color): Unit = {
+    labelMap.get((row, col)).foreach { label =>
+      label.setTextFill(color)
+      label.setFont(Font.font("Arial", FontWeight.Bold, 30))
+    }
+  }
+
+  def markWordAsFound(word: String): Unit = {
+    foundWords += word
+  }
+
+  def isWordFound(word: String): Boolean = {
+    foundWords.contains(word)
+  }
+
+
+  def highlightFirstLetter(row: Int, col: Int): Unit = {
+    labelMap.get((row, col)).foreach { label =>
+      label.setTextFill(Color.Orange)
+    }
+  }
+
+  def showHint(): Unit = {
+    hintSystem.showHint()
+  }
+
   def resetGame(): Seq[String] = {
+    println("Reset Game!")
     _selectedWords = Seq.empty
 
     gameGrid.children.clear()
@@ -151,16 +182,22 @@ class GameManager(val gameGrid: GridPane, val rows: Int, val columns: Int, click
     rectangleMap.clear()
     labelMap.clear()
 
+    foundWords = Set.empty
+    println("Found words reset.")
+
     alphabetInserts(rows, columns)
+    val newWords = selectWords()
 
-    selectWords() // This will generate and return new selected words
-  }
-
-  def changeLabelStyle(row: Int, col: Int, color: Color): Unit = {
-    labelMap.get((row, col)).foreach { label =>
-      label.setTextFill(color)
-      label.setFont(Font.font("Arial", FontWeight.Bold, 30))
+    hintSystem match {
+      case hint: FirstLetterHint =>
+        hint.resetHints()
+        println("Hints reset!")
+      case _ =>
     }
+
+    newWords
   }
+
+
 
 }
