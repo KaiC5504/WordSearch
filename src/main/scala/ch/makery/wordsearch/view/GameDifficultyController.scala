@@ -11,17 +11,16 @@ import scalafx.scene.control.ChoiceBox
 class GameDifficultyController(
                               private val gameDifficultyChoiceBox: ChoiceBox[String]
                               ) {
-  // Initialize game difficulty choice box
+
   var difficulty: ObservableList[String] = FXCollections.observableArrayList("Easy", "Medium", "Hard")
   gameDifficultyChoiceBox.setItems(difficulty)
 
-  //default difficulty set to easy
+
   gameDifficultyChoiceBox.value = "Easy"
 
-  // Handle start button
+
   def handleStart(): Unit = {
 
-    // Get selected difficulty
     val selectedDifficulty = gameDifficultyChoiceBox.getValue
 
     GameBoard.setGameBoard(selectedDifficulty)

@@ -2,7 +2,6 @@ package ch.makery.wordsearch.view
 
 import ch.makery.wordsearch.MainApp
 import ch.makery.wordsearch.model.{FirstLetterHint, GameBoard, GameManager}
-import javafx.fxml.FXML
 import scalafx.Includes._
 import scalafx.scene.control.{Button, Label}
 import scalafx.scene.layout.GridPane
@@ -91,7 +90,7 @@ class GameController(
       currentSelection.foreach { case (_, row, col) =>
         gameManager.changeLabelStyle(row, col, Color.Green)
       }
-      gameManager.markWordAsFound(formedWord)
+      gameManager.wordFound(formedWord)
       crossOutWordLabel(formedWord)
       resetSelection()
     } else if (currentSelection.nonEmpty && !gameManager.getSelectedWords.exists(word => word.startsWith(formedWord))) {
@@ -101,7 +100,6 @@ class GameController(
 
   private def resetSelection(): Unit = {
     currentSelection = Seq.empty
-//    resetHighlighting() // Call this method to reset the UI highlighting
   }
 
   private def crossOutWordLabel(correctWord: String): Unit = {

@@ -31,14 +31,6 @@ class GameManager(val gameGrid: GridPane, val rows: Int, val columns: Int, click
   }
   def getSelectedWords: Seq[String] = _selectedWords
 
-  def highlightRectangleAt(row: Int, col: Int, color: Color): Unit = {
-    rectangleMap.get((row, col)).foreach(_.fill = color)
-  }
-
-  def resetAllHighlighting(): Unit = {
-    rectangleMap.values.foreach(_.fill = Color.Transparent)
-  }
-
   def canPlaceWord(word: String, startRow: Int, startColumn: Int, rows: Int, columns: Int): Boolean = {
     val indices = (0 until word.length).map { k =>
       val targetRow = startRow
@@ -154,7 +146,7 @@ class GameManager(val gameGrid: GridPane, val rows: Int, val columns: Int, click
     }
   }
 
-  def markWordAsFound(word: String): Unit = {
+  def wordFound(word: String): Unit = {
     foundWords += word
   }
 
@@ -163,7 +155,7 @@ class GameManager(val gameGrid: GridPane, val rows: Int, val columns: Int, click
   }
 
 
-  def highlightFirstLetter(row: Int, col: Int): Unit = {
+  def hintHighlight(row: Int, col: Int): Unit = {
     labelMap.get((row, col)).foreach { label =>
       label.setTextFill(Color.Orange)
     }
@@ -174,7 +166,6 @@ class GameManager(val gameGrid: GridPane, val rows: Int, val columns: Int, click
   }
 
   def resetGame(): Seq[String] = {
-    println("Reset Game!")
     _selectedWords = Seq.empty
 
     gameGrid.children.clear()
@@ -183,7 +174,6 @@ class GameManager(val gameGrid: GridPane, val rows: Int, val columns: Int, click
     labelMap.clear()
 
     foundWords = Set.empty
-    println("Found words reset.")
 
     alphabetInserts(rows, columns)
     val newWords = selectWords()
@@ -191,7 +181,6 @@ class GameManager(val gameGrid: GridPane, val rows: Int, val columns: Int, click
     hintSystem match {
       case hint: FirstLetterHint =>
         hint.resetHints()
-        println("Hints reset!")
       case _ =>
     }
 

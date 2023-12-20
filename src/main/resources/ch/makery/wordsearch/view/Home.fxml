@@ -20,16 +20,16 @@
          </font>
       </Text>
       <Ellipse fill="#b79ff530" layoutX="498.0" layoutY="406.0" opacity="0.63" radiusX="174.0" radiusY="245.0" stroke="#d0d0d0" strokeType="INSIDE" />
-      <Button layoutX="429.0" layoutY="228.0" mnemonicParsing="false" onAction="#handlePlay" prefHeight="48.0" prefWidth="138.0" text="Play" AnchorPane.leftAnchor="429.0" AnchorPane.rightAnchor="428.0">
+      <Button layoutX="429.0" layoutY="223.0" mnemonicParsing="false" onAction="#handlePlay" prefHeight="48.0" prefWidth="138.0" text="Play" AnchorPane.leftAnchor="429.0" AnchorPane.rightAnchor="428.0">
          <font>
             <Font name="Arial" size="25.0" />
          </font></Button>
-      <Button layoutX="423.0" layoutY="376.0" mnemonicParsing="false" onAction="#handleTutorial" prefHeight="48.0" prefWidth="149.0" text="Tutorial">
+      <Button layoutX="424.0" layoutY="374.0" mnemonicParsing="false" onAction="#handleTutorial" prefHeight="48.0" prefWidth="149.0" text="Tutorial">
          <font>
             <Font name="Arial" size="25.0" />
          </font>
       </Button>
-      <Button layoutX="447.0" layoutY="522.0" mnemonicParsing="false" onAction="#handleClose" prefHeight="47.0" prefWidth="101.0" text="Close">
+      <Button layoutX="445.0" layoutY="521.0" mnemonicParsing="false" onAction="#handleClose" prefHeight="47.0" prefWidth="101.0" text="Close">
          <font>
             <Font name="Arial" size="25.0" />
          </font>
