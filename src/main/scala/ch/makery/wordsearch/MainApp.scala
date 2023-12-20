@@ -21,6 +21,7 @@ object MainApp extends JFXApp{
     title = "Word Search"
     icons += new Image(getClass.getResourceAsStream("/images/icon.png"))
     scene = new Scene() {
+      stylesheets += getClass.getResource("view/Style.css").toString
       root = roots
     }
     width = 1000

@@ -62,7 +62,7 @@ class GameManager(val gameGrid: GridPane, val rows: Int, val columns: Int, click
         for (k <- 0 until word.length) {
           val letter = word.charAt(k).toString
           val label = new javafx.scene.control.Label(letter)
-          label.textFill = Color.Red
+//          label.textFill = Color.Red
           val targetRow = startRow
           val targetColumn = (startColumn + k) % columns // Place each letter in a consecutive column
           gameGrid.add(label, targetColumn, targetRow)

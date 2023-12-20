@@ -3,35 +3,88 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Ellipse?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-image: url('/images/wordbackground.jpg'); -fx-background-size: cover; -fx-background-position: center center;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.makery.wordsearch.view.HomeController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="995.0" styleClass="homePage" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.makery.wordsearch.view.HomeController">
    <children>
-      <Text layoutX="336.0" layoutY="69.322265625" strokeType="OUTSIDE" strokeWidth="0.0" text="Word" AnchorPane.leftAnchor="336.0" AnchorPane.topAnchor="24.0">
+      <Text layoutX="312.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Word" AnchorPane.leftAnchor="312.0" AnchorPane.topAnchor="34.68359375">
          <font>
-            <Font size="42.0" />
+            <Font name="Arial" size="60.0" />
          </font>
       </Text>
-      <Text layoutX="456.162109375" layoutY="69.322265625" strokeType="OUTSIDE" strokeWidth="0.0" text="SEARCH" AnchorPane.rightAnchor="282.60546875" AnchorPane.topAnchor="24.0">
+      <Text layoutX="477.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SEARCH" AnchorPane.rightAnchor="241.349609375" AnchorPane.topAnchor="24.96484375">
          <font>
-            <Font name="System Bold" size="42.0" />
+            <Font name="Arial Black" size="60.0" />
          </font>
       </Text>
-      <Ellipse fill="#b79ff530" layoutX="452.0" layoutY="341.0" opacity="0.63" radiusX="170.0" radiusY="240.0" stroke="#d0d0d0" strokeType="INSIDE" />
-      <Button layoutX="399.0" layoutY="161.0" mnemonicParsing="false" onAction="#handlePlay" prefHeight="47.0" prefWidth="101.0" text="Play" AnchorPane.leftAnchor="399.0" AnchorPane.rightAnchor="400.0">
+      <Ellipse fill="#b79ff530" layoutX="498.0" layoutY="406.0" opacity="0.63" radiusX="174.0" radiusY="245.0" stroke="#d0d0d0" strokeType="INSIDE" />
+      <Button layoutX="429.0" layoutY="228.0" mnemonicParsing="false" onAction="#handlePlay" prefHeight="48.0" prefWidth="138.0" text="Play" AnchorPane.leftAnchor="429.0" AnchorPane.rightAnchor="428.0">
          <font>
             <Font name="Arial" size="25.0" />
          </font></Button>
-      <Button layoutX="390.0" layoutY="317.0" mnemonicParsing="false" onAction="#handleTutorial" prefHeight="48.0" prefWidth="124.0" text="Tutorial">
+      <Button layoutX="423.0" layoutY="376.0" mnemonicParsing="false" onAction="#handleTutorial" prefHeight="48.0" prefWidth="149.0" text="Tutorial">
          <font>
             <Font name="Arial" size="25.0" />
          </font>
       </Button>
-      <Button layoutX="402.0" layoutY="473.0" mnemonicParsing="false" onAction="#handleClose" prefHeight="47.0" prefWidth="101.0" text="Exit">
+      <Button layoutX="447.0" layoutY="522.0" mnemonicParsing="false" onAction="#handleClose" prefHeight="47.0" prefWidth="101.0" text="Close">
          <font>
             <Font name="Arial" size="25.0" />
          </font>
       </Button>
+      <Line endX="86.0" endY="7.4644775390625" layoutX="86.0" layoutY="149.0" startX="-39.0" startY="131.0" stroke="#eeacee" strokeWidth="5.0" />
+      <Line endX="88.33331298828125" endY="5.4644775390625" layoutX="129.0" layoutY="181.0" startX="-39.0" startY="131.0" stroke="#eeacee" strokeWidth="5.0" />
+      <Line endX="90.33331298828125" endY="1.666656494140625" layoutX="175.0" layoutY="215.0" startX="-39.0" startY="131.0" stroke="#eeacee" strokeWidth="5.0" />
+      <Line endX="73.0" endY="215.53555297851562" layoutX="113.0" layoutY="134.0" startX="-79.0" startY="96.0" stroke="#eeacee" strokeWidth="5.0" />
+      <Line endX="68.0" endY="216.0" layoutX="156.0" layoutY="94.0" startX="-79.0" startY="96.0" stroke="#eeacee" strokeWidth="5.0" />
+      <Line endX="63.33331298828125" endY="210.0" layoutX="206.0" layoutY="64.0" startX="-79.0" startY="96.0" stroke="#eeacee" strokeWidth="5.0" />
+      <Text fill="#e84978" layoutX="97.0" layoutY="267.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A" textAlignment="CENTER" wrappingWidth="30.34197998046875">
+         <font>
+            <Font name="Arial" size="39.0" />
+         </font>
+      </Text>
+      <Text fill="#e84978" layoutX="139.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="B" textAlignment="CENTER" wrappingWidth="30.34197998046875">
+         <font>
+            <Font name="Arial" size="39.0" />
+         </font>
+      </Text>
+      <Text fill="#e84978" layoutX="141.0" layoutY="303.0" strokeType="OUTSIDE" strokeWidth="0.0" text="C" textAlignment="CENTER" wrappingWidth="30.34197998046875">
+         <font>
+            <Font name="Arial" size="39.0" />
+         </font>
+      </Text>
+      <Text fill="#e84978" layoutX="182.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" text="D" textAlignment="CENTER" wrappingWidth="30.34197998046875">
+         <font>
+            <Font name="Arial" size="39.0" />
+         </font>
+      </Text>
+      <Line endX="86.0" endY="7.4644775390625" layoutX="773.0" layoutY="146.0" startX="-39.0" startY="131.0" stroke="#9392d3" strokeWidth="5.0" />
+      <Line endX="88.33331298828125" endY="5.4644775390625" layoutX="816.0" layoutY="178.0" startX="-39.0" startY="131.0" stroke="#9392d3" strokeWidth="5.0" />
+      <Line endX="90.33331298828125" endY="1.666656494140625" layoutX="862.0" layoutY="212.0" startX="-39.0" startY="131.0" stroke="#9392d3" strokeWidth="5.0" />
+      <Line endX="73.0" endY="215.53555297851562" layoutX="800.0" layoutY="131.0" startX="-79.0" startY="96.0" stroke="#9392d3" strokeWidth="5.0" />
+      <Line endX="68.0" endY="216.0" layoutX="843.0" layoutY="91.0" startX="-79.0" startY="96.0" stroke="#9392d3" strokeWidth="5.0" />
+      <Line endX="63.33331298828125" endY="210.0" layoutX="893.0" layoutY="61.0" startX="-79.0" startY="96.0" stroke="#9392d3" strokeWidth="5.0" />
+      <Text fill="#4d9a76" layoutX="784.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E" textAlignment="CENTER" wrappingWidth="30.34197998046875">
+         <font>
+            <Font name="Arial" size="39.0" />
+         </font>
+      </Text>
+      <Text fill="#4d9a76" layoutX="826.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="F" textAlignment="CENTER" wrappingWidth="30.34197998046875">
+         <font>
+            <Font name="Arial" size="39.0" />
+         </font>
+      </Text>
+      <Text fill="#4d9a76" layoutX="828.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="G" textAlignment="CENTER" wrappingWidth="30.34197998046875">
+         <font>
+            <Font name="Arial" size="39.0" />
+         </font>
+      </Text>
+      <Text fill="#4d9a76" layoutX="869.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="H" textAlignment="CENTER" wrappingWidth="30.34197998046875">
+         <font>
+            <Font name="Arial" size="39.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

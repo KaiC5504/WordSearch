@@ -37,7 +37,7 @@
                         <Font name="Arial Bold" size="30.0" />
                      </font>
                   </Label>
-                  <Button fx:id="backToHome" layoutX="71.0" layoutY="31.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="137.0" text="Back to Home" visible="false">
+                  <Button fx:id="backToHome" layoutX="71.0" layoutY="31.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="137.0" text="Home" visible="false">
                      <font>
                         <Font name="Arial" size="17.0" />
                      </font>

@@ -1,0 +1,27 @@
+.homePage {
+    -fx-background-image: url('/images/wordbackground.jpg');
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+.difficultyPage {
+    -fx-background-image: url('/images/Difficulty_Background.jpg');
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+.button {
+    -fx-font-size: 25px;
+    -fx-background-color: #99ccff;
+    -fx-text-fill: black;
+    -fx-padding: 3px 3px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(gaussian, grey, 10, 0, 4, 4);
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #6699ff;
+}
+
