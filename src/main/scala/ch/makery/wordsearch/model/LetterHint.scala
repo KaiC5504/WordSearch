@@ -3,7 +3,7 @@ package ch.makery.wordsearch.model
 import scala.util.Random
 
 
-class FirstLetterHint(gameManager: GameManager) extends HintSystem {
+class LetterHint(gameManager: GameManager) extends HintSystem {
 
   private var usedHints: Set[String] = Set.empty
 

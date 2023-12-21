@@ -179,7 +179,7 @@ class GameManager(val gameGrid: GridPane, val rows: Int, val columns: Int, click
     val newWords = selectWords()
 
     hintSystem match {
-      case hint: FirstLetterHint =>
+      case hint: LetterHint =>
         hint.resetHints()
       case _ =>
     }

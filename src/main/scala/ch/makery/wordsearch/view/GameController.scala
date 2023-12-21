@@ -1,7 +1,7 @@
 package ch.makery.wordsearch.view
 
 import ch.makery.wordsearch.MainApp
-import ch.makery.wordsearch.model.{FirstLetterHint, GameBoard, GameManager}
+import ch.makery.wordsearch.model.{LetterHint, GameBoard, GameManager}
 import scalafx.Includes._
 import scalafx.scene.control.{Button, Label}
 import scalafx.scene.layout.GridPane
@@ -40,13 +40,13 @@ class GameController(
 
     gameManager = new GameManager(gameGrid, rows, columns, handAlphabetClick, null)
 
-    val showHint = new FirstLetterHint(gameManager)
+    val showHint = new LetterHint(gameManager)
     gameManager.hintSystem = showHint
 
     gameManager.alphabetInserts(rows, columns)
 
     val selectWords = gameManager.selectWords()
-    updateLabels(selectWords)
+    displayWords(selectWords)
 
     backToHome.setOnAction(_ => handleBackToHome())
     newGame.setOnAction(_ => handleNewGame())
@@ -57,7 +57,7 @@ class GameController(
     val formedWord = currentSelection.map(_._1).mkString + letter
     val startsNewWord = gameManager.getSelectedWords.exists(w => w.startsWith(formedWord) || w.startsWith(letter))
 
-    if (currentSelection.isEmpty || isAdjacent(currentSelection.last, (letter, row, col)) && startsNewWord) {
+    if (currentSelection.isEmpty || isBeside(currentSelection.last, (letter, row, col)) && startsNewWord) {
       currentSelection :+= (letter, row, col)
     } else {
       resetSelection()
@@ -70,17 +70,14 @@ class GameController(
     checkIfWordFormed()
   }
 
-  private def isAdjacent(lastSelection: (String, Int, Int), newSelection: (String, Int, Int)): Boolean = {
+  private def isBeside(lastSelection: (String, Int, Int), newSelection: (String, Int, Int)): Boolean = {
     val (_, lastRow, lastCol) = lastSelection
     val (_, newRow, newCol) = newSelection
 
-    // Check for horizontal adjacency
-    val isHorizontalAdjacent = lastRow == newRow && (Math.abs(newCol - lastCol) == 1)
 
-    // Check for vertical adjacency
-    val isVerticalAdjacent = lastCol == newCol && (Math.abs(newRow - lastRow) == 1)
+    val side = lastRow == newRow && (Math.abs(newCol - lastCol) == 1)
 
-    isHorizontalAdjacent || isVerticalAdjacent
+    side
   }
 
   private def checkIfWordFormed(): Unit = {
@@ -91,7 +88,7 @@ class GameController(
         gameManager.changeLabelStyle(row, col, Color.Green)
       }
       gameManager.wordFound(formedWord)
-      crossOutWordLabel(formedWord)
+      crossWord(formedWord)
       resetSelection()
     } else if (currentSelection.nonEmpty && !gameManager.getSelectedWords.exists(word => word.startsWith(formedWord))) {
       resetSelection()
@@ -102,7 +99,7 @@ class GameController(
     currentSelection = Seq.empty
   }
 
-  private def crossOutWordLabel(correctWord: String): Unit = {
+  private def crossWord(correctWord: String): Unit = {
     val wordLineMap = Map(
       word1.getText -> line1,
       word2.getText -> line2,
@@ -131,7 +128,7 @@ class GameController(
 
   def handleNewGame(): Unit = {
     val newSelectWords = gameManager.resetGame()
-    updateLabels(newSelectWords)
+    displayWords(newSelectWords)
     gameOver.setVisible(false)
     List(word1, word2, word3).foreach(_.setVisible(true))
     List(line1, line2, line3).foreach(_.setVisible(false))
@@ -140,7 +137,7 @@ class GameController(
     wordsFound = 0
   }
 
-  private def updateLabels(words: Seq[String]): Unit = {
+  private def displayWords(words: Seq[String]): Unit = {
     if (words.length >= 3) {
       word1.setText(words(0))
       word2.setText(words(1))
