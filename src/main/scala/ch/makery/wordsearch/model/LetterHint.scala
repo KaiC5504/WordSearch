@@ -20,13 +20,12 @@ class LetterHint(gameManager: GameManager) extends HintSystem {
       }
 
     } else {
-      println("No more hints available!")
+      println("No more hints!")
     }
   }
 
   def resetHints(): Unit = {
     usedHints = Set.empty
-    println("Used hints have been reset.")
   }
 
 }

@@ -1,12 +1,9 @@
 package ch.makery.wordsearch.model
 
-
-import ch.makery.wordsearch.MainApp
 import scalafx.Includes._
 import scalafx.scene.layout.GridPane
 import scalafx.scene.paint.Color
 import scalafx.scene.text.{Font, FontWeight}
-
 import scala.util.Random
 import scalafx.scene.input.MouseEvent
 import scalafx.scene.shape.Rectangle
@@ -17,7 +14,6 @@ class GameManager(val gameGrid: GridPane, val rows: Int, val columns: Int, click
   private var foundWords: Set[String] = Set.empty
   val wordsPool = Seq("HOT", "THIS", "WHY", "BIRD", "SAND", "LOVE", "MAY")
   val alphabetPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-  val maxLengthOfWords: Int = wordsPool.map(_.length).max
   private val rectangleMap: scala.collection.mutable.Map[(Int, Int), Rectangle] = scala.collection.mutable.Map.empty
   private val labelMap: scala.collection.mutable.Map[(Int, Int), javafx.scene.control.Label] = scala.collection.mutable.Map.empty
   var wordStartPositions: Map[String, (Int, Int, Boolean)] = Map()
@@ -25,7 +21,6 @@ class GameManager(val gameGrid: GridPane, val rows: Int, val columns: Int, click
   def selectWords(): Seq[String] = {
     if (_selectedWords.isEmpty) {
       _selectedWords = Random.shuffle(wordsPool).take(3)
-      println(s"Selected words for the game: ${_selectedWords.mkString(", ")}")
     }
     _selectedWords
   }
@@ -47,23 +42,22 @@ class GameManager(val gameGrid: GridPane, val rows: Int, val columns: Int, click
 
   def placeWord(word: String, rows: Int, columns: Int, attempts: Int = 10): Unit = {
     if (attempts > 0) {
-      val startColumn = Random.nextInt(columns - word.length + 1) // Ensure there is enough space for the word
+      val startColumn = Random.nextInt(columns - word.length + 1)
       val startRow = Random.nextInt(rows)
 
       if (canPlaceWord(word, startRow, startColumn, rows, columns)) {
         for (k <- 0 until word.length) {
           val letter = word.charAt(k).toString
           val label = new javafx.scene.control.Label(letter)
-//          label.textFill = Color.Red
           val targetRow = startRow
-          val targetColumn = (startColumn + k) % columns // Place each letter in a consecutive column
+          val targetColumn = (startColumn + k) % columns
           gameGrid.add(label, targetColumn, targetRow)
           labelMap((targetRow, targetColumn)) = label
           label.setFont(new Font(30))
           javafx.scene.layout.GridPane.setHalignment(label, javafx.geometry.HPos.CENTER)
           wordStartPositions += (word -> (startRow, startColumn, true))
 
-          val rectangle = new Rectangle {
+          val rectangle = new Rectangle {    //ChatGPT for creating rectangle only
             width <== gameGrid.width / columns
             height <== gameGrid.height / rows
             fill = Color.Transparent
@@ -76,10 +70,6 @@ class GameManager(val gameGrid: GridPane, val rows: Int, val columns: Int, click
             clickHandler(clickedLetter, row, col)
           })
 
-          rectangle.setOnMouseDragged((event: MouseEvent) => {
-            rectangle.fill = Color.Blue.opacity(0.1)
-          })
-
           rectangle.setOnMouseReleased((event: MouseEvent) => {
             rectangle.fill = Color.Transparent
           })
@@ -88,7 +78,6 @@ class GameManager(val gameGrid: GridPane, val rows: Int, val columns: Int, click
           rectangleMap((targetRow, targetColumn)) = rectangle
         }
       } else {
-        // Try placing the word again
         placeWord(word, rows, columns, attempts - 1)
       }
     }
@@ -96,7 +85,7 @@ class GameManager(val gameGrid: GridPane, val rows: Int, val columns: Int, click
 
   def alphabetInserts(rows: Int, columns: Int): Unit = {
     val randomSelectedWords = selectWords()
-    val alphabetPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
 
     for (word <- randomSelectedWords) {
       placeWord(word, rows, columns)
@@ -126,10 +115,6 @@ class GameManager(val gameGrid: GridPane, val rows: Int, val columns: Int, click
           clickHandler(clickedLetter, row, col)
         })
 
-        rectangle.setOnMouseDragged((event: MouseEvent) => {
-          rectangle.fill = Color.Blue.opacity(0.1)
-        })
-
         rectangle.setOnMouseReleased((event: MouseEvent) => {
           rectangle.fill = Color.Transparent
         })
@@ -139,7 +124,7 @@ class GameManager(val gameGrid: GridPane, val rows: Int, val columns: Int, click
     }
   }
 
-  def changeLabelStyle(row: Int, col: Int, color: Color): Unit = {
+  def wordStyle(row: Int, col: Int, color: Color): Unit = {
     labelMap.get((row, col)).foreach { label =>
       label.setTextFill(color)
       label.setFont(Font.font("Arial", FontWeight.Bold, 30))
@@ -186,7 +171,5 @@ class GameManager(val gameGrid: GridPane, val rows: Int, val columns: Int, click
 
     newWords
   }
-
-
 
 }

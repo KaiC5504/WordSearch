@@ -65,16 +65,12 @@ class GameController(
         currentSelection :+= (letter, row, col)
       }
     }
-
-    println(s"Current List: ${currentSelection.map(_._1).mkString}")
     checkIfWordFormed()
   }
 
   private def isBeside(lastSelection: (String, Int, Int), newSelection: (String, Int, Int)): Boolean = {
     val (_, lastRow, lastCol) = lastSelection
     val (_, newRow, newCol) = newSelection
-
-
     val side = lastRow == newRow && (Math.abs(newCol - lastCol) == 1)
 
     side
@@ -83,9 +79,8 @@ class GameController(
   private def checkIfWordFormed(): Unit = {
     val formedWord = currentSelection.map(_._1).mkString
     if (gameManager.getSelectedWords.contains(formedWord)) {
-      println(s"Correct word: $formedWord")
       currentSelection.foreach { case (_, row, col) =>
-        gameManager.changeLabelStyle(row, col, Color.Green)
+        gameManager.wordStyle(row, col, Color.Green)
       }
       gameManager.wordFound(formedWord)
       crossWord(formedWord)
@@ -99,6 +94,15 @@ class GameController(
     currentSelection = Seq.empty
   }
 
+  private def displayWords(words: Seq[String]): Unit = {
+    if (words.length >= 3) {
+      word1.setText(words(0))
+      word2.setText(words(1))
+      word3.setText(words(2))
+    }
+  }
+
+  //ChatGPT for crossWord
   private def crossWord(correctWord: String): Unit = {
     val wordLineMap = Map(
       word1.getText -> line1,
@@ -121,9 +125,8 @@ class GameController(
     }
   }
 
-  private def handleBackToHome(): Unit = {
-    // Code to navigate back to the home screen
-    MainApp.showHome() // Assuming MainApp has a method showHome
+  def handleBackToHome(): Unit = {
+    MainApp.showHome()
   }
 
   def handleNewGame(): Unit = {
@@ -137,14 +140,6 @@ class GameController(
     wordsFound = 0
   }
 
-  private def displayWords(words: Seq[String]): Unit = {
-    if (words.length >= 3) {
-      word1.setText(words(0))
-      word2.setText(words(1))
-      word3.setText(words(2))
-    }
-  }
-
   def handleHint(): Unit = {
     gameManager.hintSystem.showHint()
   }
@@ -154,7 +149,6 @@ class GameController(
       case "easy" => (7, 7)
       case "medium" => (9, 9)
       case "hard" => (11, 11)
-      case _ => throw new IllegalArgumentException("Invalid")
     }
   }
 
@@ -164,7 +158,7 @@ class GameController(
     val rowConstraints = new javafx.scene.layout.RowConstraints
     rowConstraints.setMinHeight(10)
     rowConstraints.setPrefHeight(30)
-    rowConstraints.setVgrow(javafx.scene.layout.Priority.SOMETIMES)
+    rowConstraints.setVgrow(javafx.scene.layout.Priority.SOMETIMES) //ChatGPT for setVgrow
 
     gameGrid.rowConstraints = Seq.fill(rows)(rowConstraints)
 
@@ -175,6 +169,7 @@ class GameController(
 
     gameGrid.columnConstraints = Seq.fill(columns)(columnConstraints)
 
+    //ChatGPT for alignment
     gameGrid.alignment = javafx.geometry.Pos.CENTER
   }
 }
